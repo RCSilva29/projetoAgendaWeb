@@ -8,6 +8,12 @@
     
     <hr/>
 
+    <div class="text-center mb-2">       
+        <div class="text-danger">
+            <strong>{{ mensagemErro() }}</strong>
+        </div>
+    </div>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
         
       <div class="mb-3">
@@ -19,6 +25,14 @@
           id="emailInput"
           placeholder="Digite seu e-mail"
         />
+        <div class="text-danger" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+            <div *ngIf="form.get('email')?.hasError('required')">
+                Por favor, informe o email do usuário.
+            </div>
+            <div *ngIf="form.get('email')?.hasError('email')">
+                Por favor, informe um endereço de email válido.
+            </div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -30,12 +44,22 @@
           id="passwordInput"
           placeholder="Digite sua senha"
         />
+        <div class="text-danger" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
+            <div *ngIf="form.get('senha')?.hasError('required')">
+                Por favor, informe a senha do usuário.
+            </div>
+            <div *ngIf="form.get('senha')?.hasError('minlength')">
+                Por favor, informe a senha com pelo menos 8 caracteres.
+            </div>
+        </div>
       </div>
 
-      <button type="submit" class="btn btn-primary w-100 mb-3">Entrar</button>
+      <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="form.invalid">
+        Entrar
+      </button>
 
       <div class="text-center">
-        <a href="#" class="text-decoration-none">Criar conta</a>
+        <a routerLink="/criar-usuario" class="text-decoration-none">Criar conta</a>
       </div>
     </form>
   </div>

@@ -1,1 +1,108 @@
-<p>criar-usuario works!</p>
+<div class="d-flex align-items-center justify-content-center vh-100 bg-light">
+  <div class="card shadow p-4" style="width: 24rem;">
+    
+    <img class="text-center" src="https://www.cotiinformatica.com.br/imagens/logo-coti-informatica.svg"/>
+    
+    <h2 class="text-center mb-1">Finanças Web</h2>
+    <p class="text-center mb-1">Criação de usuários</p>
+    
+    <hr/>
+
+    <div class="text-center mb-2">
+        <div class="text-success">
+            <strong>{{ mensagemSucesso() }}</strong>
+        </div>
+        <div class="text-danger">
+            <strong>{{ mensagemErro() }}</strong>
+        </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        
+      <div class="mb-3">
+        <label for="nomeInput" class="form-label">Nome do usuário</label>
+        <input
+          type="text"
+          formControlName="nome"
+          class="form-control"
+          id="nomeInput"
+          placeholder="Digite seu nome"
+        />
+        <div class="text-danger" *ngIf="form.get('nome')?.touched && form.get('nome')?.invalid">
+            <div *ngIf="form.get('nome')?.hasError('required')">
+                Por favor, informe o nome do usuário.
+            </div>
+            <div *ngIf="form.get('nome')?.hasError('minlength')">
+                Por favor, informe o nome deve ter pelo menos 8 caracteres.
+            </div>
+            <div *ngIf="form.get('nome')?.hasError('maxlength')">
+                Por favor, informe o nome deve ter no máximo 100 caracteres.
+            </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="emailInput" class="form-label">E-mail</label>
+        <input
+          type="email"
+          formControlName="email"
+          class="form-control"
+          id="emailInput"
+          placeholder="Digite seu e-mail"
+        />
+        <div class="text-danger" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+            <div *ngIf="form.get('email')?.hasError('required')">
+                Por favor, informe o email do usuário.
+            </div>
+            <div *ngIf="form.get('email')?.hasError('email')">
+                Por favor, informe um endereço de email válido.
+            </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="passwordInput" class="form-label">Senha</label>
+        <input
+          type="password"
+          formControlName="senha"
+          class="form-control"
+          id="passwordInput"
+          placeholder="Digite sua senha"
+        />
+        <div class="text-danger" *ngIf="form.get('senha')?.touched && form.get('senha')?.invalid">
+            <div *ngIf="form.get('senha')?.hasError('required')">
+                Por favor, informe a senha do usuário.
+            </div>
+            <div *ngIf="form.get('senha')?.hasError('pattern')">
+                Por favor, informe a senha com letras maiúsculas, letras minúsculas, 
+                números, símbolos e pelo menos 8 caracteres.
+            </div>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="passwordConfirmInput" class="form-label">Confirme a sua senha</label>
+        <input
+          type="password"
+          formControlName="senhaConfirmacao"
+          class="form-control"
+          id="passwordConfirmInput"
+          placeholder="Confirme sua senha"
+        />
+        <div class="text-danger" *ngIf="form.get('senhaConfirmacao')?.touched && form.get('senhaConfirmacao')?.invalid">
+            <div *ngIf="form.get('senhaConfirmacao')?.hasError('required')">
+                Por favor, confirme a senha do usuário.
+            </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="form.invalid">
+            Realizar Cadastro
+      </button>
+
+      <div class="text-center">
+        <a routerLink="/autenticar" class="text-decoration-none">Autenticar usuário</a>
+      </div>
+    </form>
+  </div>
+</div>
