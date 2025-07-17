@@ -1,1 +1,60 @@
-<p>cadastrar-contas works!</p>
+<app-navbar />
+
+<div class="container">
+    <div class="card shadow">
+        <div class="card-header">
+            <h5 class="card-title">Cadastrar Contas</h5>
+            <p class="card-subtitle">Preencha os campos para incluir uma conta.</p>
+        </div>
+        <div class="card-body">
+
+            <div *ngIf="mensagem()" class="alert alert-primary">
+                <strong>{{ mensagem() }}</strong>
+            </div>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <div class="mb-3">
+                    <label class="form-label">Nome da conta:</label>
+                    <input type="text" class="form-control" formControlName="nome" />
+                    <div *ngIf="form.get('nome')?.invalid && form.get('nome')?.touched" class="text-danger">
+                        <small>O nome da conta é obrigatório.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Valor da conta:</label>
+                    <input type="text" class="form-control" formControlName="valor" />
+                    <div *ngIf="form.get('valor')?.invalid && form.get('valor')?.touched" class="text-danger">
+                        <small>O valor da conta é obrigatório.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Data da conta:</label>
+                    <input type="date" class="form-control" formControlName="data" />
+                    <div *ngIf="form.get('data')?.invalid && form.get('data')?.touched" class="text-danger">
+                        <small>A data da conta é obrigatória.</small>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="tipo" class="form-label">Tipo da conta</label>
+                    <select class="form-select" formControlName="tipo">
+                        <option value="">Selecione</option>
+                        <option value="ENTRADA">Entrada</option>
+                        <option value="SAIDA">Saída</option>
+                    </select>
+                    <div *ngIf="form.get('tipo')?.invalid && form.get('tipo')?.touched" class="text-danger">
+                        <small>O tipo da conta é obrigatório.</small>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-sm" [disabled]="form.invalid">
+                    Realizar Cadastro
+                </button>
+
+            </form>
+        </div>
+    </div>
+</div>

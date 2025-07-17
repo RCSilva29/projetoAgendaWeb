@@ -1,1 +1,74 @@
-<p>consultar-contas works!</p>
+<app-navbar/>
+
+<div class="container">
+    <div class="card shadow">
+        <div class="card-header">
+            <h5 class="card-title">Consultar Contas</h5>
+            <p class="card-subtitle">Informe o período de datas para consultar suas contas.</p>
+        </div>
+        <div class="card-body">
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <input type="date" formControlName="dataMin" class="form-control form-control-sm"/>
+                        <div *ngIf="form.get('dataMin')?.invalid && form.get('dataMin')?.touched" class="text-danger">
+                            Data mínima é obrigatória.
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" formControlName="dataMax" class="form-control form-control-sm"/>
+                        <div *ngIf="form.get('dataMax')?.invalid && form.get('dataMax')?.touched" class="text-danger">
+                            Data máxima é obrigatória.
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="submit" class="btn btn-primary btn-sm"
+                            value="Pesquisar contas" [disabled]="form.invalid"/>
+                    </div>
+                </div>
+            </form>
+
+            <div *ngIf="mensagem()" class="alert alert-primary mt-2 mb-2">
+                <strong>{{ mensagem() }}</strong>
+            </div>
+
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Nome da conta</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th>Tipo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let conta of contas()">
+                        <td>{{ conta.nome | uppercase }}</td>
+                        <td>{{ conta.data | date : 'dd/MM/yyyy' }}</td>
+                        <td>{{ conta.valor | currency: 'BRL' }}</td>
+                        <td>{{ conta.tipo }}</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm me-1">
+                                Editar
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" 
+                                (click)="onDelete(conta.id)">
+                                Excluir
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5">
+                            Quantidade de contas: {{ contas().length }}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </div>
+    </div>
+</div>
